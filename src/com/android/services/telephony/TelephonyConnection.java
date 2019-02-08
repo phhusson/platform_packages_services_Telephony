@@ -699,7 +699,7 @@ abstract class TelephonyConnection extends Connection implements Holdable {
         if (getPhone() != null) {
             getPhone().setEchoSuppressionEnabled();
 
-        if (SystemProperties.getBoolean("persist.sys.radio.huawei", false)) {
+        if (SystemProperties.getBoolean("persist.sys.radio.ussd.fix", false)) {
                 getPhone().setMute(audioState.isMuted());
             }
         }
