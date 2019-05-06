@@ -43,6 +43,8 @@ import com.android.settingslib.utils.ThreadUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Service code used to assist in querying the network for service
@@ -377,14 +379,20 @@ public class NetworkQueryService extends Service {
      */
     private List<CellInfo> getCellInfoList(List<OperatorInfo> operatorInfoList) {
         List<CellInfo> cellInfoList = new ArrayList<>();
+        Pattern p = Pattern.compile("^([0-9]{5,6}).*");
         for (OperatorInfo oi: operatorInfoList) {
             String operatorNumeric = oi.getOperatorNumeric();
             String mcc = null;
             String mnc = null;
             log("operatorNumeric: " + operatorNumeric);
-            if (operatorNumeric != null && operatorNumeric.matches("^[0-9]{5,6}$")) {
-                mcc = operatorNumeric.substring(0, 3);
-                mnc = operatorNumeric.substring(3);
+            if (operatorNumeric != null) {
+                Matcher m = p.matcher(operatorNumeric);
+                if (m.matches()) {
+                    mcc = m.group(1).substring(0, 3);
+                    mnc = m.group(1).substring(3);
+                } else {
+                    Log.e(LOG_TAG, "Failed to parse operatorNumeric!");
+                }
             }
             CellIdentityGsm cig = new CellIdentityGsm(
                     Integer.MAX_VALUE /* lac */,
