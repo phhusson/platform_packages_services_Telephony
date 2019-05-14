@@ -400,6 +400,7 @@ public class NetworkQueryService extends Service {
 
             CellInfoGsm ci = new CellInfoGsm();
             ci.setCellIdentity(cig);
+            ci.setOriginalOperatorNumeric(operatorNumeric);
             cellInfoList.add(ci);
         }
         return cellInfoList;
