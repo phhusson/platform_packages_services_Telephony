@@ -553,10 +553,11 @@ public class NetworkSelectListPreference extends ListPreference
                     wcdma.getCellIdentity().getMobileNetworkOperator());
         } else if (cellInfo instanceof CellInfoGsm) {
             CellInfoGsm gsm = (CellInfoGsm) cellInfo;
+            String originalOperatorNumeric = gsm.getOriginalOperatorNumeric();
             oi = new OperatorInfo(
                     (String) gsm.getCellIdentity().getOperatorAlphaLong(),
                     (String) gsm.getCellIdentity().getOperatorAlphaShort(),
-                    gsm.getCellIdentity().getMobileNetworkOperator());
+                    TextUtils.isEmpty(originalOperatorNumeric) ? gsm.getCellIdentity().getMobileNetworkOperator() : originalOperatorNumeric);
         } else if (cellInfo instanceof CellInfoCdma) {
             CellInfoCdma cdma = (CellInfoCdma) cellInfo;
             oi = new OperatorInfo(
