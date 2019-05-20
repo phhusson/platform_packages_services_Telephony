@@ -54,8 +54,12 @@ public class DataUsagePreference extends Preference {
         DataUsageController controller = new DataUsageController(activity);
 
         DataUsageController.DataUsageInfo usageInfo = controller.getDataUsageInfo(mTemplate);
-        setSummary(activity.getString(R.string.data_usage_template,
-                Formatter.formatFileSize(activity, usageInfo.usageLevel), usageInfo.period));
+        if(usageInfo != null) {
+            setSummary(activity.getString(R.string.data_usage_template,
+                        Formatter.formatFileSize(activity, usageInfo.usageLevel), usageInfo.period));
+        } else {
+            setSummary(activity.getString(R.string.data_usage_title));
+        }
         setIntent(getIntent());
     }
 
