@@ -35,7 +35,6 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.ComponentInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.net.NetworkStats;
 import android.net.Uri;
 import android.os.AsyncResult;
 import android.os.Binder;
@@ -171,7 +170,6 @@ import com.android.internal.telephony.uicc.UiccController;
 import com.android.internal.telephony.uicc.UiccProfile;
 import com.android.internal.telephony.uicc.UiccSlot;
 import com.android.internal.telephony.util.LocaleUtils;
-import com.android.internal.telephony.util.TelephonyResourceUtils;
 import com.android.internal.telephony.util.VoicemailNotificationSettingsUtil;
 import com.android.internal.util.HexDump;
 import com.android.phone.settings.PickSmsSubscriptionActivity;
@@ -3207,21 +3205,6 @@ public class PhoneInterfaceManager extends ITelephony.Stub {
                 return TelephonyManager.NETWORK_SELECTION_MODE_UNKNOWN;
             }
             return (int) sendRequest(CMD_GET_NETWORK_SELECTION_MODE, null /* argument */, subId);
-        } finally {
-            Binder.restoreCallingIdentity(identity);
-        }
-    }
-
-    @Override
-    public PhoneCapability getPhoneCapability(int subId, String callingPackage,
-                String callingFeatureId) {
-        if (!TelephonyPermissions.checkCallingOrSelfReadPhoneState(
-                mApp, subId, callingPackage, callingFeatureId, "getPhoneCapability")) {
-            return null;
-        }
-        final long identity = Binder.clearCallingIdentity();
-        try {
-            return mPhoneConfigurationManager.getStaticPhoneCapability();
         } finally {
             Binder.restoreCallingIdentity(identity);
         }
@@ -7230,33 +7213,6 @@ public class PhoneInterfaceManager extends ITelephony.Stub {
     }
 
     /**
-     * Get aggregated video call data usage since boot.
-     *
-     * @param perUidStats True if requesting data usage per uid, otherwise overall usage.
-     * @return Snapshot of video call data usage
-     * {@hide}
-     */
-    @Override
-    public NetworkStats getVtDataUsage(int subId, boolean perUidStats) {
-        mApp.enforceCallingOrSelfPermission(android.Manifest.permission.READ_NETWORK_USAGE_HISTORY,
-                null);
-
-        final long identity = Binder.clearCallingIdentity();
-        try {
-            // NetworkStatsService keeps tracking the active network interface and identity. It
-            // records the delta with the corresponding network identity.
-            // We just return the total video call data usage snapshot since boot.
-            Phone phone = getPhone(subId);
-            if (phone != null) {
-                return phone.getVtDataUsage(perUidStats);
-            }
-            return null;
-        } finally {
-            Binder.restoreCallingIdentity(identity);
-        }
-    }
-
-    /**
      * Policy control of data connection. Usually used when data limit is passed.
      * @param enabled True if enabling the data, otherwise disabling.
      * @param subId Subscription index
@@ -8055,7 +8011,7 @@ public class PhoneInterfaceManager extends ITelephony.Stub {
             loge("isMultiSimSupportedInternal: no static configuration available");
             return TelephonyManager.MULTISIM_NOT_SUPPORTED_BY_HARDWARE;
         }
-        if (staticCapability.getLogicalModemUuids().size() < 2) {
+        if (staticCapability.logicalModemList.size() < 2) {
             loge("isMultiSimSupportedInternal: maximum number of modem is < 2");
             return TelephonyManager.MULTISIM_NOT_SUPPORTED_BY_HARDWARE;
         }
@@ -8308,10 +8264,8 @@ public class PhoneInterfaceManager extends ITelephony.Stub {
         //TODO investigate if this API should require proper permission check in R b/133791609
         final long identity = Binder.clearCallingIdentity();
         try {
-            return TelephonyResourceUtils
-                    .getResourcesForSubId(getDefaultPhone().getContext(), subId)
-                    .getString(com.android.telephony.resources.R.string
-                            .config_mms_user_agent_profile_url);
+            return SubscriptionManager.getResourcesForSubId(getDefaultPhone().getContext(), subId)
+                    .getString(com.android.internal.R.string.config_mms_user_agent_profile_url);
         } finally {
             Binder.restoreCallingIdentity(identity);
         }
@@ -8322,9 +8276,8 @@ public class PhoneInterfaceManager extends ITelephony.Stub {
         //TODO investigate if this API should require proper permission check in R b/133791609
         final long identity = Binder.clearCallingIdentity();
         try {
-            return TelephonyResourceUtils
-                    .getResourcesForSubId(getDefaultPhone().getContext(), subId)
-                    .getString(com.android.telephony.resources.R.string.config_mms_user_agent);
+            return SubscriptionManager.getResourcesForSubId(getDefaultPhone().getContext(), subId)
+                    .getString(com.android.internal.R.string.config_mms_user_agent);
         } finally {
             Binder.restoreCallingIdentity(identity);
         }
