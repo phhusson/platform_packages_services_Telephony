@@ -307,7 +307,9 @@
     <string name="throttle_time_frame" msgid="1813452485948918791">"Период на потрошен интернет"</string>
     <string name="throttle_rate" msgid="7641913901133634905">"Политика на стапка на податоци"</string>
     <string name="throttle_help" msgid="2624535757028809735">"Дознај повеќе"</string>
-    <string name="throttle_status_subtext" msgid="1110276415078236687">"<xliff:g id="USED_0">%1$s</xliff:g> (<xliff:g id="USED_1">%2$d</xliff:g> ٪) од максимум <xliff:g id="USED_2">%3$s</xliff:g> за периодот\nСледниот период започнува за <xliff:g id="USED_3">%4$d</xliff:g> дена (<xliff:g id="USED_4">%5$s</xliff:g>)"</string>
+    <!-- String.format failed for translation -->
+    <!-- no translation found for throttle_status_subtext (1110276415078236687) -->
+    <skip />
     <string name="throttle_data_usage_subtext" msgid="3185429653996709840">"<xliff:g id="USED_0">%1$s</xliff:g> (<xliff:g id="USED_1">%2$d</xliff:g>٪) од <xliff:g id="USED_2">%3$s</xliff:g> максимален период"</string>
     <string name="throttle_data_rate_reduced_subtext" msgid="8369839346277847725">"<xliff:g id="USED_0">%1$s</xliff:g> максимум е надминат\nСтапката на податоци е намалена на <xliff:g id="USED_1">%2$d</xliff:g> кб/с"</string>
     <string name="throttle_time_frame_subtext" msgid="6462089615392402127">"<xliff:g id="USED_0">%1$d</xliff:g>٪ од циклусот помина\nНаредниот период започнува за <xliff:g id="USED_1">%2$d</xliff:g> дена (<xliff:g id="USED_2">%3$s</xliff:g>)"</string>
@@ -637,12 +639,6 @@
     <string name="alert_dialog_yes" msgid="3532525979632841417">"Да"</string>
     <string name="alert_dialog_no" msgid="1075632654085988420">"Не"</string>
     <string name="alert_dialog_dismiss" msgid="1336356286354517054">"Отфрли"</string>
-    <string name="phone_in_ecm_call_notification_text_without_data_restriction_hint" msgid="3747860785153531225">"Телефонот е во режим на итни повратни повици"</string>
-    <string name="phone_in_ecm_notification_complete_time_without_data_restriction_hint" msgid="3690292264812050858">"До <xliff:g id="COMPLETETIME">%s</xliff:g>"</string>
-    <plurals name="alert_dialog_exit_ecm_without_data_restriction_hint" formatted="false" msgid="6477733043040328640">
-      <item quantity="one">Телефонот ќе биде во режим на итни повратни повици <xliff:g id="COUNT_1">%s</xliff:g> минута.\n Дали сакате да излезете сега?</item>
-      <item quantity="other">Телефонот ќе биде во режим на итни повратни повици <xliff:g id="COUNT_1">%s</xliff:g> минути.\n Дали сакате да излезете сега?</item>
-    </plurals>
     <string name="voicemail_provider" msgid="4158806657253745294">"Услуга"</string>
     <string name="voicemail_settings" msgid="4451045613238972776">"Поставување"</string>
     <string name="voicemail_number_not_set" msgid="8831561283386938155">"&lt;Не е поставен&gt;"</string>
